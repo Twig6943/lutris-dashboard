@@ -9,7 +9,7 @@
       <a v-if="order=='oldest'" href="#" @click.prevent="onSortBy('newest')">Sort by newest</a>
     </p>
     <submission-table
-      :submissions-loading="submissionsLoading"
+      :loading="submissionsLoading"
       :submissions="submissions" />
   </div>
 </template>
