@@ -5,25 +5,44 @@
         <i :class="menu.meta.icon" v-if="menu.meta.icon"></i>
         <span>{{ menu.meta.title }}</span>
       </template>
-      <menu-item v-for="(item, key) in menu.children" :key="key" :menu="item" :basePath="pathResolve" />
+      <menu-item
+        v-for="(item, key) in menu.children"
+        :key="key"
+        :menu="item"
+        :basePath="pathResolve"
+      />
     </el-sub-menu>
     <app-link v-else-if="showMenuType === 1" :to="pathResolve">
-      <el-menu-item :index="pathResolve" v-if="!menu.children[0].children || menu.children[0].children.length === 0">
-        <i :class="menu.children[0].meta.icon || menu.meta.icon" v-if="menu.children[0].meta.icon || menu.meta.icon"></i>
+      <el-menu-item
+        :index="pathResolve"
+        v-if="!menu.children[0].children || menu.children[0].children.length === 0"
+      >
+        <i
+          :class="menu.children[0].meta.icon || menu.meta.icon"
+          v-if="menu.children[0].meta.icon || menu.meta.icon"
+        ></i>
         <template #title>{{ menu.children[0].meta.title }}</template>
       </el-menu-item>
       <el-sub-menu v-else :index="pathResolve">
         <template #title>
-          <i :class="menu.children[0].meta.icon || menu.meta.icon" v-if="menu.children[0].meta.icon || menu.meta.icon"></i>
+          <i
+            :class="menu.children[0].meta.icon || menu.meta.icon"
+            v-if="menu.children[0].meta.icon || menu.meta.icon"
+          ></i>
           <span>{{ menu.children[0].meta.title }}</span>
         </template>
-        <menu-item v-for="(item, key) in menu.children[0].children" :key="key" :menu="item" :basePath="pathResolve" />
+        <menu-item
+          v-for="(item, key) in menu.children[0].children"
+          :key="key"
+          :menu="item"
+          :basePath="pathResolve"
+        />
       </el-sub-menu>
     </app-link>
     <app-link v-else :to="pathResolve">
       <el-menu-item :index="pathResolve">
-      <i :class="menu.meta.icon" v-if="menu.meta.icon"></i>
-      <template #title>{{ menu.meta.title }}</template>
+        <i :class="menu.meta.icon" v-if="menu.meta.icon"></i>
+        <template #title>{{ menu.meta.title }}</template>
       </el-menu-item>
     </app-link>
   </template>
@@ -50,7 +69,10 @@ export default defineComponent({
   setup(props) {
     const menu = props.menu
     const showMenuType = computed(() => {
-      if (menu.children && (menu.children.length > 1 || (menu.children.length === 1 && menu.alwayShow))) {
+      if (
+        menu.children &&
+        (menu.children.length > 1 || (menu.children.length === 1 && menu.alwayShow))
+      ) {
         return 2
       } else if (menu.children && menu.children.length === 1 && !menu.alwayShow) {
         return 1
@@ -85,10 +107,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .el-sub-menu {
-    text-align: left;
-  }
-  .el-menu-item {
-    text-align: left;
-  }
+.el-sub-menu {
+  text-align: left;
+}
+.el-menu-item {
+  text-align: left;
+}
 </style>

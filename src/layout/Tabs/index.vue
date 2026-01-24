@@ -17,14 +17,36 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item icon="el-icon-refresh-left" @click="pageReload">Reload</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="currentDisabled" @click="closeCurrentRoute">Close current tab</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length < 3" @click="closeOtherRoute">Close other tabs</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length <= 1" @click="closeAllRoute">Close all tabs</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-refresh-left" @click="pageReload"
+              >Reload</el-dropdown-item
+            >
+            <el-dropdown-item
+              icon="el-icon-circle-close"
+              :disabled="currentDisabled"
+              @click="closeCurrentRoute"
+              >Close current tab</el-dropdown-item
+            >
+            <el-dropdown-item
+              icon="el-icon-circle-close"
+              :disabled="menuList.length < 3"
+              @click="closeOtherRoute"
+              >Close other tabs</el-dropdown-item
+            >
+            <el-dropdown-item
+              icon="el-icon-circle-close"
+              :disabled="menuList.length <= 1"
+              @click="closeAllRoute"
+              >Close all tabs</el-dropdown-item
+            >
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-tooltip class="item" effect="dark" :content="contentFullScreen ? 'Exit fullscreen':'Fullscreen'" placement="bottom">
+      <el-tooltip
+        class="item"
+        effect="dark"
+        :content="contentFullScreen ? 'Exit fullscreen' : 'Fullscreen'"
+        placement="bottom"
+      >
         <i class="el-icon-full-screen" @click="onFullscreen"></i>
       </el-tooltip>
     </div>
@@ -61,7 +83,7 @@ export default defineComponent({
     let menuList = ref(tabsHook.getItem())
     if (menuList.value.length === 0) {
       addMenu(defaultMenu)
-    } 
+    }
     watch(menuList.value, (newVal) => {
       tabsHook.setItem(newVal)
     })
@@ -78,10 +100,10 @@ export default defineComponent({
     }
 
     function pageReload() {
-      const self = route.matched[route.matched.length-1].instances.default
+      const self = route.matched[route.matched.length - 1].instances.default
       // console.log(route.matched);
-      
-      self.handleReload();
+
+      self.handleReload()
       // const { fullPath, meta, name } = unref(route);
       // if (meta.cache && name) {
       //   store.commit('keepAlive/delKeepAliveComponentsName', name)
@@ -96,7 +118,6 @@ export default defineComponent({
         delMenu(route)
       }
     }
-
 
     function closeOtherRoute() {
       menuList.value = [defaultMenu]
@@ -166,7 +187,11 @@ export default defineComponent({
           activeDom: domBox.activeDom.getBoundingClientRect(),
           activeFather: domBox.activeFather.getBoundingClientRect()
         }
-        const num = domData.activeDom.x - domData.activeFather.x + 1/2 * domData.activeDom.width - 1/2 * domData.scrollbar.width
+        const num =
+          domData.activeDom.x -
+          domData.activeFather.x +
+          (1 / 2) * domData.activeDom.width -
+          (1 / 2) * domData.scrollbar.width
         domBox.scrollbar.scrollLeft = num
       }
     }
@@ -199,61 +224,61 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .tabs {
+.tabs {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  background: var(--system-header-background);
+  border-bottom: 1px solid var(--system-header-border-color);
+  border-top: 1px solid var(--system-header-border-color);
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
+  .handle {
+    min-width: 95px;
+    height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    height: 40px;
-    background: var(--system-header-background);
-    border-bottom: 1px solid var(--system-header-border-color);
-    border-top: 1px solid var(--system-header-border-color);
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .1);
-    .handle {
-      min-width: 95px;
-      height: 100%;
+    .el-dropdown-link {
+      margin-top: 5px;
+      border-left: 1px solid var(--system-header-border-color);
+      height: 25px;
+      width: 40px;
       display: flex;
+      justify-content: center;
       align-items: center;
-      .el-dropdown-link {
-        margin-top: 5px;
-        border-left: 1px solid var(--system-header-border-color);
-        height: 25px;
-        width: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-      i {
-        color: var(--system-header-text-color);
-      }
+    }
+    i {
+      color: var(--system-header-text-color);
     }
   }
-  .scroll-container {
-    white-space: nowrap;
-    position: relative;
-    overflow: hidden;
-    width: 100%;
-    :deep {
-      .el-scrollbar__bar {
-        bottom: 0px;
-      }
-      .el-scrollbar__wrap {
-        height: 49px;
-      }
+}
+.scroll-container {
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  :deep {
+    .el-scrollbar__bar {
+      bottom: 0px;
+    }
+    .el-scrollbar__wrap {
+      height: 49px;
     }
   }
-  .tags-view-container {
-    height: 34px;
-    flex: 1;
-    width: 100%;
-    display: flex;
+}
+.tags-view-container {
+  height: 34px;
+  flex: 1;
+  width: 100%;
+  display: flex;
+}
+.el-icon-full-screen {
+  cursor: pointer;
+  &:hover {
+    background: rgba(0, 0, 0, 0.025);
   }
-  .el-icon-full-screen {
-    cursor: pointer;
-    &:hover {
-      background: rgba(0,0,0,.025);
-    }
-    &:focus {
-      outline: none;
-    }
+  &:focus {
+    outline: none;
   }
+}
 </style>

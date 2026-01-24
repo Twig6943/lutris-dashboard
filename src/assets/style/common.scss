@@ -1,5 +1,5 @@
-@import "./transition.scss";
-@import "@/theme/index.scss";
+@import './transition.scss';
+@import '@/theme/index.scss';
 .layout-container {
   background-color: var(--system-container-main-background);
   width: calc(100% - 30px);
@@ -55,7 +55,7 @@ a {
 }
 
 /** element-plus **/
-.el-icon{
+.el-icon {
   text-align: center;
 }
 
@@ -86,5 +86,4 @@ a {
       }
     }
   }
- 
 }

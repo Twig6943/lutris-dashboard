@@ -1,21 +1,32 @@
 <template>
   <el-card>
-
     <template #header>
       <a :href="gameURL(game.slug)" target="_blank">
-        <img :src="game.banner_url" :alt="game.banner_url" style="float: left; margin-right: 10px;">
+        <img
+          :src="game.banner_url"
+          :alt="game.banner_url"
+          style="float: left; margin-right: 10px"
+        />
         {{ game.name }}
       </a>
-      <br>
-      <el-tag type="success">{{ game.slug }} ({{ game.id }})</el-tag><br>
+      <br />
+      <el-tag type="success">{{ game.slug }} ({{ game.id }})</el-tag><br />
       <span>Year: {{ game.year }}</span>
     </template>
 
     <div>
       <p>Users: {{ game.user_count }}</p>
-      <p>Platforms: <el-tag v-for="platform in game.platforms" :key="platform.slug" type="info">{{ platform.name }}</el-tag></p>
+      <p>
+        Platforms:
+        <el-tag v-for="platform in game.platforms" :key="platform.slug" type="info">{{
+          platform.name
+        }}</el-tag>
+      </p>
       <p v-if="game.aliases">
-        Aliases: <el-tag v-for="alias in game.aliases" :key="alias.slug" type="info">{{ alias.name }}</el-tag>
+        Aliases:
+        <el-tag v-for="alias in game.aliases" :key="alias.slug" type="info">{{
+          alias.name
+        }}</el-tag>
       </p>
     </div>
 
@@ -25,20 +36,16 @@
       </el-collapse-item>
     </el-collapse>
 
-    <el-table
-      key="id"
-      :data="game.installers"
-      :row-class-name="installerTableRowClass"
-      fit>
+    <el-table key="id" :data="game.installers" :row-class-name="installerTableRowClass" fit>
       <el-table-column label="Version">
         <template #default="props">
-          <strong>{{props.row["version"]}}</strong>
+          <strong>{{ props.row['version'] }}</strong>
           <span v-if="props.row['is_playable']">✅</span>
         </template>
       </el-table-column>
       <el-table-column label="User">
         <template #default="props">
-          <strong>{{props.row["user"]}}</strong>
+          <strong>{{ props.row['user'] }}</strong>
         </template>
       </el-table-column>
       <el-table-column label="Actions">
@@ -51,18 +58,11 @@
             title="Really delete installer?"
             @confirm="onInstallerDelete(props.row['id'])"
           >
-          <template #reference>
-            <el-button
-              type="danger"
-              icon="Delete"
-              circle />
+            <template #reference>
+              <el-button type="danger" icon="Delete" circle />
             </template>
           </el-popconfirm>
-          <el-button
-            type="info"
-            icon="Edit"
-            circle
-            @click="onShowInstaller(props.row['id'])" />
+          <el-button type="info" icon="Edit" circle @click="onShowInstaller(props.row['id'])" />
           <el-button
             type="info"
             icon="ArrowUp"
@@ -75,17 +75,12 @@
             circle
             @click="onRatingClick(props.row['id'], false)"
           />
-
-
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      v-model="installerVisible"
-      title="Installer"
-      width="50%">
+    <el-dialog v-model="installerVisible" title="Installer" width="50%">
       <pre v-html="installerContent"></pre>
-      <template #footer class="dialog-footer">
+      <template #footer>
         <el-button @click="installerVisible = false">Close</el-button>
       </template>
     </el-dialog>
@@ -144,7 +139,7 @@ export default {
       }
     },
     onRatingClick(installerId, playable) {
-      console.log("TODO sent rating to website")
+      console.log('TODO sent rating to website')
     }
   }
 }

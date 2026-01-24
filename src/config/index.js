@@ -1,5 +1,3 @@
-const showLogo = true;
+const showLogo = true
 const systemTitle = 'Lutris dashboard'
-export {
-  systemTitle
-}
+export { systemTitle }

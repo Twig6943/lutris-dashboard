@@ -1,12 +1,15 @@
 {
   "name": "lutris-dashboard",
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "start": "vite",
     "build": "vite build --mode=production",
     "build:stag": "vite build --mode=staging",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
@@ -25,6 +28,11 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.0",
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-plugin-vue": "^9.0.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.0.0",
     "sass": "^1.32.12",
     "vite": "^6.0.0"
   },

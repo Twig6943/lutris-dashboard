@@ -14,9 +14,7 @@ import Games from './modules/games'
 import Installers from './modules/installers'
 import System from './modules/system'
 
-let modules = [
-  ...System
-]
+let modules = [...System]
 
 const routes = modules
 
@@ -24,23 +22,17 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes
 })
-let asyncRoutes = [
-  ...Dashboard,
-  ...Games,
-  ...Installers
-]
-
+let asyncRoutes = [...Dashboard, ...Games, ...Installers]
 
 export function addRoutes() {
-  asyncRoutes.forEach(item => {
+  asyncRoutes.forEach((item) => {
     modules.push(item)
     router.addRoute(item)
   })
 }
 
-
 function eachData(data, type) {
-  data.forEach(d => {
+  data.forEach((d) => {
     if (d.children && d.children.length > 0) {
       if (type === 0) {
         d.component = Layout
@@ -65,26 +57,24 @@ if (userStore.token) {
 const whiteList = ['/login']
 
 router.beforeEach((to, _from, next) => {
-  NProgress.start();
+  NProgress.start()
   if (userStore.token || whiteList.indexOf(to.path) !== -1) {
-    to.meta.title ? (changeTitle(to.meta.title)) : "";
+    to.meta.title ? changeTitle(to.meta.title) : ''
     next()
   } else {
-    next("/login");
-    to.meta.title ? (changeTitle(to.meta.title)) : "";
+    next('/login')
+    to.meta.title ? changeTitle(to.meta.title) : ''
   }
-});
+})
 
 router.afterEach((to, _from) => {
   const name = to.matched[to.matched.length - 1].components.default.name
   if (to.meta && to.meta.cache && name && !keepAliveStore.componentNames.includes(name)) {
     keepAliveStore.addComponentName(name)
   }
-  NProgress.done();
-});
+  NProgress.done()
+})
 
-export {
-  modules
-}
+export { modules }
 
 export default router

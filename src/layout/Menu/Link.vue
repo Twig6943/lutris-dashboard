@@ -1,7 +1,6 @@
 <template>
-  <component :is="type" v-bind="linkProps(to)" @click="hideMenu" >
-    <slot>
-    </slot>
+  <component :is="type" v-bind="linkProps(to)" @click="hideMenu">
+    <slot> </slot>
   </component>
 </template>
 <script>
@@ -17,26 +16,24 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const appStore = useAppStore();
-    const { isCollapse } = storeToRefs(appStore);
+    const appStore = useAppStore()
+    const { isCollapse } = storeToRefs(appStore)
     const linkProps = (to) => {
-     return {
-       to: to
-     }
+      return {
+        to: to
+      }
     }
     const hideMenu = () => {
       if (document.body.clientWidth <= 1000 && !isCollapse.value) {
-        appStore.setCollapse(true);
+        appStore.setCollapse(true)
       }
-    };
+    }
     return {
-      type: "router-link",
+      type: 'router-link',
       linkProps,
       hideMenu
     }
   }
 })
 </script>
-<style lang="">
-  
-</style>
+<style lang=""></style>

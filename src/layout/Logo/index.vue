@@ -22,17 +22,17 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .logo-container {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background-color: var(--system-logo-background);
-    h1 {
-      font-size: 20px;
-      white-space: nowrap;
-      color: var(--system-logo-color);
-    }
+.logo-container {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: var(--system-logo-background);
+  h1 {
+    font-size: 20px;
+    white-space: nowrap;
+    color: var(--system-logo-color);
   }
+}
 </style>

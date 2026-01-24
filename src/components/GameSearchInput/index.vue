@@ -41,9 +41,9 @@ export default {
       if (queryString.length < 3) {
         return cb([])
       }
-      searchGames(queryString).then(response => {
+      searchGames(queryString).then((response) => {
         const results = response.data.results.map((item) => {
-          return { value: "[" + item.id + "] " + item.name, slug: item.slug }
+          return { value: '[' + item.id + '] ' + item.name, slug: item.slug }
         })
         cb(results)
       })
@@ -55,9 +55,9 @@ export default {
 }
 </script>
 
-
 <style scoped>
-input, .game-search-input {
+input,
+.game-search-input {
   width: 400px;
 }
 </style>

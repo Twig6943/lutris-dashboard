@@ -35,7 +35,6 @@ export function fetchDrafts() {
   })
 }
 
-
 export function acceptInstaller(installer) {
   if (!installer) {
     throw new Error('Missing installer')

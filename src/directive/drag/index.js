@@ -3,20 +3,20 @@ const drag = {
     const dialog = el.querySelector('.el-dialog')
     const header = el.querySelector('.el-dialog__header')
     const dialogMask = el.querySelector('.el-overlay')
-    dialogMask.style.cssText += "overflow: hidden;"
+    dialogMask.style.cssText += 'overflow: hidden;'
     header.style.cursor = 'move'
     let dragStatus = false
     let data = {
       window: {
         width: 0,
-        height: 0,
+        height: 0
       },
       dialog: {
         x: 0,
         y: 0,
         width: 0,
         height: 0,
-        marginTop: ""
+        marginTop: ''
       },
       mouse: {
         x: 0,
@@ -73,12 +73,12 @@ const drag = {
           x: e.clientX,
           y: e.clientY
         }
-        dialogMask.style.userSelect = "none"
+        dialogMask.style.userSelect = 'none'
         handlePosition()
-      }  
+      }
     }
     function mouseUp(e) {
-      dialogMask.style.userSelect = "auto"
+      dialogMask.style.userSelect = 'auto'
       dragStatus = false
     }
     function sizeChange(e) {

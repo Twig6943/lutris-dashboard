@@ -1,14 +1,11 @@
 <template>
   <div>
-    <h3>{{ label }}
+    <h3>
+      {{ label }}
       <a class="edit-link" href="#" @click.prevent="toggleEditMode">Edit</a>
     </h3>
     <div v-if="editMode && value" class="diff">
-      <textarea
-        id="editBox"
-        ref="editBox"
-        v-model="value[field]"
-      />
+      <textarea id="editBox" ref="editBox" v-model="value[field]" />
     </div>
     <pre v-else :class="{ chardiff: charDiff }" class="prettydiff" v-html="diff" />
   </div>
@@ -58,6 +55,7 @@ export default {
       if (this.value) {
         return this.value[this.field]
       }
+      return ''
     }
   },
   methods: {
@@ -106,21 +104,24 @@ export default {
 .chardiff {
   em {
     outline: 1px dotted salmon;
-    background-color: #FFC46C;
+    background-color: #ffc46c;
     line-height: 0.8em;
     padding: 0;
   }
 }
 .diff {
-  background-color: #E4F1FE;
+  background-color: #e4f1fe;
   display: flex;
   font-family: 'Courier New', Courier, monospace;
   overflow: auto;
   padding: 0 1em;
   textarea {
     width: 100%;
-    padding: .5em;
-    font-family: Courier New,Courier,monospace;
+    padding: 0.5em;
+    font-family:
+      Courier New,
+      Courier,
+      monospace;
   }
   ol {
     padding: 0;
@@ -134,31 +135,33 @@ export default {
   li {
     line-height: 1.4em;
   }
-  h3.texttitle, p.author {
+  h3.texttitle,
+  p.author {
     display: none;
   }
   .delete {
-    background-color: #FFCFF7;
+    background-color: #ffcff7;
   }
   .equal {
-    background-color: #E4F1FE;
+    background-color: #e4f1fe;
   }
   .insert {
-    background-color: #C4FCDC;
+    background-color: #c4fcdc;
   }
   .empty {
     line-height: 1em;
     height: 1em;
-    background-color: #FFCFF7;
+    background-color: #ffcff7;
   }
 
   .replace {
-    background-color: #FFEED5;
+    background-color: #ffeed5;
   }
   .diff-left {
-    border-right: 2px solid #AAA;
+    border-right: 2px solid #aaa;
   }
-  .diff-left, .diff-right {
+  .diff-left,
+  .diff-right {
     padding: 0 0.5em;
     width: 50%;
     overflow: scroll;

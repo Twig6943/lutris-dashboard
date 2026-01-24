@@ -16,7 +16,7 @@ export function searchGames(query) {
   return request({
     url: '/api/games',
     method: 'get',
-    params: { 'search': query }
+    params: { search: query }
   })
 }
 
@@ -34,7 +34,6 @@ export function fetchGameSubmissions() {
   })
 }
 
-
 export function fetchGameChanges() {
   return request({
     url: `/api/games/changes`,
@@ -42,12 +41,11 @@ export function fetchGameChanges() {
   })
 }
 
-
 export function sendSubmissionAccept(submissionID) {
   return request({
     url: `/api/games/submissions/${submissionID}`,
     method: 'post',
-    data: {"accepted": true}
+    data: { accepted: true }
   })
 }
 
@@ -55,7 +53,7 @@ export function sendSubmissionReject(submissionID) {
   return request({
     url: `/api/games/submissions/${submissionID}`,
     method: 'post',
-    data: {"accepted": false}
+    data: { accepted: false }
   })
 }
 
@@ -65,7 +63,6 @@ export function mergeGames(slug1, slug2) {
     method: 'post'
   })
 }
-
 
 export function fetchGameScreenshots() {
   return request({
@@ -78,6 +75,6 @@ export function sendScreenshotReview(screenshotId, accepted) {
   return request({
     url: `/api/games/screenshots/${screenshotId}`,
     method: 'post',
-    data: {"accepted": accepted}
+    data: { accepted: accepted }
   })
 }

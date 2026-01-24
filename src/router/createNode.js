@@ -6,39 +6,38 @@ export function createNameComponent(component) {
   return () => {
     return new Promise((res) => {
       component().then((comm) => {
-        const name = (comm.default.name || 'vueAdminBox') + '$' + Date.now();
+        const name = (comm.default.name || 'vueAdminBox') + '$' + Date.now()
         const tempComm = defineComponent({
           name,
           setup() {
-            const isReload = ref(false);
-            let timeOut = null;
+            const isReload = ref(false)
+            let timeOut = null
             const handleReload = () => {
-              isReload.value = true;
-              timeOut && clearTimeout(timeOut);
-              NProgress.start();
+              isReload.value = true
+              timeOut && clearTimeout(timeOut)
+              NProgress.start()
               timeOut = setTimeout(() => {
                 nextTick(() => {
-                  NProgress.done();
-                  isReload.value = false;
-                });
-              }, 260);
-            };
+                  NProgress.done()
+                  isReload.value = false
+                })
+              }, 260)
+            }
             return {
               isReload,
               handleReload
-            };
+            }
           },
           render: function () {
             if (this.isReload) {
-              return h('div', { class: 'el-main-box' }, [h(reload)]);
+              return h('div', { class: 'el-main-box' }, [h(reload)])
             } else {
-              return h('div', { class: 'el-main-box' }, [createVNode(comm.default)]);
+              return h('div', { class: 'el-main-box' }, [createVNode(comm.default)])
             }
           }
-        });
-        res(tempComm);
-      });
-    });
-  };
+        })
+        res(tempComm)
+      })
+    })
+  }
 }
-

@@ -1,12 +1,6 @@
 <template>
   <div v-drag>
-    <el-dialog
-      ref="dialog"
-      v-model="layer.show"
-      :title="layer.title"
-      :width="layer.width"
-      center
-    >
+    <el-dialog ref="dialog" v-model="layer.show" :title="layer.title" :width="layer.width" center>
       <slot></slot>
       <template #footer v-if="layer.showButton">
         <div>
@@ -55,6 +49,4 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss" scoped>
-  
-</style>
+<style lang="scss" scoped></style>

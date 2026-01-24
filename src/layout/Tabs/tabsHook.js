@@ -1,8 +1,8 @@
 const tabsHook = {
-  setItem: function(arr) {
+  setItem: function (arr) {
     localStorage.setItem('tabs', JSON.stringify(arr))
   },
-  getItem: function() {
+  getItem: function () {
     return JSON.parse(localStorage.getItem('tabs') || '[]')
   }
 }

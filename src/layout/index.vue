@@ -1,10 +1,6 @@
 <template>
   <el-container style="height: 100vh">
-    <div
-      class="mask"
-      v-show="!isCollapse && !contentFullScreen"
-      @click="hideMenu"
-    ></div>
+    <div class="mask" v-show="!isCollapse && !contentFullScreen" @click="hideMenu"></div>
     <el-aside
       :width="isCollapse ? '60px' : '250px'"
       :class="isCollapse ? 'hide-aside' : 'show-side'"
@@ -19,14 +15,8 @@
       </el-header>
       <el-main>
         <router-view v-slot="{ Component, route }">
-          <transition
-            :name="route.meta.transition || 'fade-transform'"
-            mode="out-in"
-          >
-            <keep-alive
-              v-if="keepAliveComponentsName"
-              :include="keepAliveComponentsName"
-            >
+          <transition :name="route.meta.transition || 'fade-transform'" mode="out-in">
+            <keep-alive v-if="keepAliveComponentsName" :include="keepAliveComponentsName">
               <component :is="Component" :key="route.fullPath" />
             </keep-alive>
             <component v-else :is="Component" :key="route.fullPath" />
@@ -38,49 +28,49 @@
 </template>
 
 <script>
-import { defineComponent, computed, onBeforeMount } from "vue";
-import { storeToRefs } from "pinia";
-import { useAppStore } from "@/stores/app";
-import { useKeepAliveStore } from "@/stores/keepAlive";
-import { useEventListener } from "@vueuse/core";
-import Menu from "./Menu/index.vue";
-import Logo from "./Logo/index.vue";
-import Header from "./Header/index.vue";
+import { defineComponent, computed, onBeforeMount } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
+import { useKeepAliveStore } from '@/stores/keepAlive'
+import { useEventListener } from '@vueuse/core'
+import Menu from './Menu/index.vue'
+import Logo from './Logo/index.vue'
+import Header from './Header/index.vue'
 export default defineComponent({
   components: {
     Menu,
     Logo,
-    Header,
+    Header
   },
   setup() {
-    const appStore = useAppStore();
-    const keepAliveStore = useKeepAliveStore();
-    const { isCollapse, contentFullScreen, showLogo } = storeToRefs(appStore);
-    const keepAliveComponentsName = computed(() => keepAliveStore.componentNames);
+    const appStore = useAppStore()
+    const keepAliveStore = useKeepAliveStore()
+    const { isCollapse, contentFullScreen, showLogo } = storeToRefs(appStore)
+    const keepAliveComponentsName = computed(() => keepAliveStore.componentNames)
 
     const resizeHandler = () => {
       if (document.body.clientWidth <= 1000 && !isCollapse.value) {
-        appStore.setCollapse(true);
+        appStore.setCollapse(true)
       } else if (document.body.clientWidth > 1000 && isCollapse.value) {
-        appStore.setCollapse(false);
+        appStore.setCollapse(false)
       }
-    };
-    resizeHandler();
+    }
+    resizeHandler()
     onBeforeMount(() => {
-      useEventListener("resize", resizeHandler);
-    });
+      useEventListener('resize', resizeHandler)
+    })
     const hideMenu = () => {
-      appStore.setCollapse(true);
-    };
+      appStore.setCollapse(true)
+    }
     return {
       isCollapse,
       showLogo,
       contentFullScreen,
       keepAliveComponentsName,
-      hideMenu,
-    };
-  },
-});
+      hideMenu
+    }
+  }
+})
 </script>
 
 <style lang="scss" scoped>

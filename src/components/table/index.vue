@@ -47,7 +47,7 @@ export default defineComponent({
         return { index: 1, size: 20, total: 0 }
       }
     },
-    pageLayout: { type: String, default: "total, sizes, prev, pager, next, jumper" },
+    pageLayout: { type: String, default: 'total, sizes, prev, pager, next, jumper' },
     pageSizes: { type: Array, default: [10, 20, 50, 100] }
   },
   setup(props, context) {
@@ -57,7 +57,7 @@ export default defineComponent({
         props.page.index = 1
       } else {
         props.page.index = val
-        context.emit("getTableData")
+        context.emit('getTableData')
       }
     }
     const handleSizeChange = (val) => {
@@ -66,10 +66,10 @@ export default defineComponent({
         timer = null
       }, 100)
       props.page.size = val
-      context.emit("getTableData", true)
+      context.emit('getTableData', true)
     }
-    const handleSelectionChange = (val) =>{
-      context.emit("selection-change", val)
+    const handleSelectionChange = (val) => {
+      context.emit('selection-change', val)
     }
     return {
       handleCurrentChange,
@@ -81,19 +81,19 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-  .system-table-box {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
+.system-table-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100%;
+  .system-table {
+    flex: 1;
     height: 100%;
-    .system-table {
-      flex: 1;
-      height: 100%;
-    }
-    
-    .system-page {
-      margin-top: 20px;
-    }
   }
+
+  .system-page {
+    margin-top: 20px;
+  }
+}
 </style>
