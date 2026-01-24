@@ -9,7 +9,7 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" align="center" width="50" v-if="showSelection" />
-      <el-table-column label="序号" width="60" align="center" v-if="showIndex">
+      <el-table-column label="#" width="60" align="center" v-if="showIndex">
         <template #default="scope">
           {{ (page.index - 1) * page.size + scope.$index + 1 }}
         </template>
@@ -36,23 +36,22 @@
 import { defineComponent } from 'vue'
 export default defineComponent({
   props: {
-    data: { type: Array, default: () => [] }, // 数据源
-    select: { type: Array, default: () => [] }, // 已选择的数据，与selection结合使用
-    showIndex: { type: Boolean, default: false }, // 是否展示index选择，默认否
-    showSelection: { type: Boolean, default: false }, // 是否展示选择框，默认否
-    showPage: { type: Boolean, default: true }, // 是否展示页级组件，默认是
-    page: { // 分页参数
+    data: { type: Array, default: () => [] },
+    select: { type: Array, default: () => [] },
+    showIndex: { type: Boolean, default: false },
+    showSelection: { type: Boolean, default: false },
+    showPage: { type: Boolean, default: true },
+    page: {
       type: Object,
       default: () => {
         return { index: 1, size: 20, total: 0 }
       }
     },
-    pageLayout: { type: String, default: "total, sizes, prev, pager, next, jumper" }, // 分页需要显示的东西，默认全部
+    pageLayout: { type: String, default: "total, sizes, prev, pager, next, jumper" },
     pageSizes: { type: Array, default: [10, 20, 50, 100] }
   },
   setup(props, context) {
     let timer = null
-    // 分页相关：监听页码切换事件
     const handleCurrentChange = (val) => {
       if (timer) {
         props.page.index = 1
@@ -61,7 +60,6 @@ export default defineComponent({
         context.emit("getTableData")
       }
     }
-    // 分页相关：监听单页显示数量切换事件
     const handleSizeChange = (val) => {
       timer = 'work'
       setTimeout(() => {
@@ -70,7 +68,6 @@ export default defineComponent({
       props.page.size = val
       context.emit("getTableData", true)
     }
-    // 选择监听器
     const handleSelectionChange = (val) =>{
       context.emit("selection-change", val)
     }

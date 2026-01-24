@@ -49,8 +49,7 @@ export default defineComponent({
   },
   setup(props) {
     const menu = props.menu
-    // todo: 优化if结构
-    const showMenuType = computed(() => { // 0: 无子菜单， 1：有1个子菜单， 2：显示上下级子菜单
+    const showMenuType = computed(() => {
       if (menu.children && (menu.children.length > 1 || (menu.children.length === 1 && menu.alwayShow))) {
         return 2
       } else if (menu.children && menu.children.length === 1 && !menu.alwayShow) {
@@ -59,7 +58,6 @@ export default defineComponent({
         return 0
       }
     })
-    // todo: 优化多层if
     const pathResolve = computed(() => {
       let path = ''
       if (showMenuType.value === 1) {

@@ -29,7 +29,7 @@ const route = [
     path: '/login',
     component: createNameComponent(() => import('@/views/system/login.vue')),
     hideMenu: true,
-    meta: { title: '登录', hideTabs: true }
+    meta: { title: 'Login', hideTabs: true }
   },
   {
     path: "/:pathMatch(.*)",

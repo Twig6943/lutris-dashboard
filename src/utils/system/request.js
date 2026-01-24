@@ -49,7 +49,7 @@ function showError(error) {
     userStore.loginOut()
   } else {
     ElMessage({
-      message: error.msg || error.message || '服务异常',
+      message: error.msg || error.message || 'Service error',
       type: 'error',
       duration: 3 * 1000
     })

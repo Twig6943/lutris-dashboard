@@ -17,14 +17,14 @@
         </div>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item icon="el-icon-refresh-left" @click="pageReload">重新加载</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="currentDisabled" @click="closeCurrentRoute">关闭当前标签</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length < 3" @click="closeOtherRoute">关闭其他标签</el-dropdown-item>
-            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length <= 1" @click="closeAllRoute">关闭所有标签</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-refresh-left" @click="pageReload">Reload</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-close" :disabled="currentDisabled" @click="closeCurrentRoute">Close current tab</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length < 3" @click="closeOtherRoute">Close other tabs</el-dropdown-item>
+            <el-dropdown-item icon="el-icon-circle-close" :disabled="menuList.length <= 1" @click="closeAllRoute">Close all tabs</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
-      <el-tooltip class="item" effect="dark" :content="contentFullScreen ? '退出全屏':'内容全屏'" placement="bottom">
+      <el-tooltip class="item" effect="dark" :content="contentFullScreen ? 'Exit fullscreen':'Fullscreen'" placement="bottom">
         <i class="el-icon-full-screen" @click="onFullscreen"></i>
       </el-tooltip>
     </div>
@@ -112,7 +112,6 @@ export default defineComponent({
       router.push(defaultMenu.path)
     }
 
-    // 添加新的菜单项
     function addMenu(menu) {
       let { path, meta, name } = menu
       if (meta.hideTabs) {
@@ -130,7 +129,6 @@ export default defineComponent({
       }
     }
 
-    // 删除菜单项
     function delMenu(menu) {
       let index = 0
       if (!menu.meta.hideClose) {
@@ -145,14 +143,12 @@ export default defineComponent({
       }
     }
 
-    // 初始化activeMenu
     function initMenu(menu) {
       activeMenu = menu
       nextTick(() => {
         setPosition()
       })
     }
-    // 设置当前滚动条应该在的位置
     function setPosition() {
       if (scrollbarDom.value && scrollbarDom.value.scrollbar) {
         const domBox = {
@@ -175,7 +171,6 @@ export default defineComponent({
       }
     }
 
-    // 配置需要缓存的数据
     function setKeepAliveData() {
       let keepAliveNames = []
       menuList.value.forEach((menu) => {
@@ -184,7 +179,6 @@ export default defineComponent({
       keepAliveStore.setComponentNames(keepAliveNames)
     }
 
-    // 初始化时调用：1. 新增菜单 2. 初始化activeMenu
     addMenu(route)
     initMenu(route)
     return {
@@ -192,7 +186,6 @@ export default defineComponent({
       onFullscreen,
       pageReload,
       scrollbarDom,
-      // 菜单相关
       menuList,
       activeMenu,
       delMenu,

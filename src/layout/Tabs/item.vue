@@ -4,7 +4,7 @@
       {{ menu.meta.title }}
     </router-link>
     <i class="el-icon-refresh-right" @click.stop="reload" v-if="active" />
-    <i class="el-icon-close" @click.stop="closeTab" v-if="!menu.meta.hideClose" alt="关闭当前标签页"></i>
+    <i class="el-icon-close" @click.stop="closeTab" v-if="!menu.meta.hideClose" alt="Close tab"></i>
   </div>
 </template>
 
@@ -30,11 +30,9 @@ export default defineComponent({
     }
   },
   setup(props, { emit }) {
-    // 关闭按钮
     function closeTab() {
       emit('close')
     }
-    // 刷新按钮
     function reload() {
       emit('reload')
     }

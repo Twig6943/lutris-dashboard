@@ -1,8 +1,3 @@
-/**
- * 指令，仅用于element-plus 中的 dialog 使用
- * 可基于窗口各种拖拽使用
- */
-
 const drag = {
   mounted(el) {
     const dialog = el.querySelector('.el-dialog')
@@ -11,8 +6,8 @@ const drag = {
     dialogMask.style.cssText += "overflow: hidden;"
     header.style.cursor = 'move'
     let dragStatus = false
-    let data = { // 数据源，不变部分为：window信息、dialog信息、mouse初始值信息，可变部分为：拖拽坐标位移
-      window: { // window信息
+    let data = {
+      window: {
         width: 0,
         height: 0,
       },
@@ -22,22 +17,20 @@ const drag = {
         width: 0,
         height: 0,
         marginTop: ""
-      }, // dialog信息
-      mouse: { // 鼠标初始信息
+      },
+      mouse: {
         x: 0,
         y: 0
       },
-      drag: { // 拖拽过程信息
+      drag: {
         x: 0,
         y: 0
       }
     }
-    // 所有的监听只为了修改data数据
     header.addEventListener('mousedown', mouseDown)
     document.addEventListener('mousemove', mouseMove)
     document.addEventListener('mouseup', mouseUp)
     window.addEventListener('resize', sizeChange)
-    // 边界处理，防止拖动位置溢出
     function handlePosition() {
       if (data.mouse.x - data.drag.x >= data.dialog.x) {
         data.drag.x = data.mouse.x - data.dialog.x
@@ -53,15 +46,12 @@ const drag = {
       }
       setPosition()
     }
-    // 根据data来设置拖动后的位置
     function setPosition() {
       let top = data.drag.y - data.mouse.y + data.dialog.y
       let left = data.drag.x - data.mouse.x + data.dialog.x
       dialog.style.cssText += `position: absolute; top: calc(${top}px - ${data.dialog.marginTop}); left: ${left}px;`
     }
     function mouseDown(e) {
-      // 获取dialog目前的位置，坐标, 以及屏幕当前的宽高
-      // 一切初始数据的获取应该放置于此，避免其他如：宽度修改等一系列的影响
       if (e.button !== 0) {
         return
       }
@@ -94,15 +84,12 @@ const drag = {
     function sizeChange(e) {
       // dialog.style.cssText += 'position: static';
     }
-    // 方便卸载使用
     el.__mouseDown__ = mouseDown
     el.__mouseUp__ = mouseUp
     el.__mouseMove__ = mouseMove
     el.__sizeChange__ = sizeChange
   },
   beforeUnmount(el) {
-    // 避免重复开销，卸载所有的监听
-    // 解决问题：多次创建新的实例 =》 监听不取消 =》 同时存在多个无用的监听，导致页面卡顿
     document.removeEventListener('mousedown', el.__mouseDown__)
     document.removeEventListener('mousemove', el.__mouseMove__)
     document.removeEventListener('mouseup', el.__mouseUp__)
