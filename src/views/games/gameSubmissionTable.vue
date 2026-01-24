@@ -9,11 +9,17 @@
     <el-table-column label="Game" min-width="280">
       <template #default="{ row }">
         <div class="game-cell">
-          <img
-            v-if="row.game?.banner_url"
-            :src="row.game.banner_url"
-            class="game-banner"
-            alt="">
+          <div class="banner-wrapper">
+            <img
+              v-if="row.game?.banner_url"
+              :src="row.game.banner_url"
+              class="game-banner"
+              alt=""
+              @error="$event.target.style.display='none'">
+            <div class="game-banner game-banner--placeholder">
+              <el-icon><Picture /></el-icon>
+            </div>
+          </div>
           <div class="game-info">
             <router-link :to="'/games/' + row.game?.slug" class="game-name">
               {{ row.game?.name }}
@@ -101,12 +107,30 @@ export default {
   gap: 12px;
 }
 
+.banner-wrapper {
+  position: relative;
+  width: 64px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
 .game-banner {
   width: 64px;
   height: 24px;
   object-fit: cover;
   border-radius: 3px;
-  flex-shrink: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--system-container-background, #f0f2f5);
+    color: var(--system-page-tip-color);
+    font-size: 14px;
+  }
 }
 
 .game-info {
