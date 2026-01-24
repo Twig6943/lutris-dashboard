@@ -94,7 +94,7 @@
 
 <script>
 import { deleteInstaller } from '@/api/installers'
-import moment from 'moment';
+import dayjs from '@/utils/dayjs'
 export default {
   name: 'GameCard',
   props: {
@@ -111,7 +111,7 @@ export default {
   },
   methods: {
     dateTime(value) {
-      return moment(value).fromNow();
+      return dayjs(value).fromNow()
     },
     gameURL(slug) {
       return 'https://lutris.net/games/' + slug

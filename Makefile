@@ -1,6 +1,6 @@
 deploy:
-	npm run build
+	pnpm build
 	rsync -avz dist/ anaheim:~/sites/dashboard
 
 run:
-	npm run dev
+	pnpm dev

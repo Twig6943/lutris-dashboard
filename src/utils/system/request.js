@@ -1,5 +1,5 @@
 import axios from 'axios'
-import store from '@/store'
+import { useUserStore } from '@/stores/user'
 import { ElMessage } from 'element-plus'
 const baseURL = import.meta.env.VITE_BASE_URL
 
@@ -10,8 +10,9 @@ const service = axios.create({
 
 service.interceptors.request.use(
   (config) => {
-    if (store.getters['user/token']) {
-      config.headers["Authorization"] = "Token " + store.state.user.token;
+    const userStore = useUserStore()
+    if (userStore.token) {
+      config.headers["Authorization"] = "Token " + userStore.token;
       config.headers["Accept"] = "Application/json";
     }
     return config
@@ -44,8 +45,8 @@ service.interceptors.response.use(
 
 function showError(error) {
   if (error.code === 403) {
-    // to re-login
-    store.dispatch('user/loginOut')
+    const userStore = useUserStore()
+    userStore.loginOut()
   } else {
     ElMessage({
       message: error.msg || error.message || '服务异常',

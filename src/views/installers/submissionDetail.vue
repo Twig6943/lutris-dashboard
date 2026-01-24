@@ -119,7 +119,7 @@
 <script>
 import { fetchDraft, fetchRevisions, acceptSubmission, rejectSubmission } from '@/api/installers'
 import { ElMessage } from 'element-plus'
-import moment from 'moment'
+import dayjs from '@/utils/dayjs'
 import { getGame } from '@/api/games'
 import EditableDiff from '@/components/EditableDiff/index.vue'
 import GameSearchInput from '@/components/GameSearchInput/index.vue'
@@ -148,15 +148,15 @@ export default {
       return this.$route.params && this.$route.params.id
     },
     submittedAt() {
-      const created_moment = moment(this.submission.created_at)
-      return created_moment.format('MMMM Do hh:mm') + ' (' + created_moment.fromNow() + ')'
+      const created = dayjs(this.submission.created_at)
+      return created.format('MMMM Do hh:mm') + ' (' + created.fromNow() + ')'
     },
     updatedAt() {
       if (!this.originalInstaller) {
         return ''
       }
-      const updatedMoment = moment(this.originalInstaller.updated_at)
-      return updatedMoment.format('MMMM Do hh:mm') + ' (' + updatedMoment.fromNow() + ')'
+      const updated = dayjs(this.originalInstaller.updated_at)
+      return updated.format('MMMM Do hh:mm') + ' (' + updated.fromNow() + ')'
     }
   },
   created() {

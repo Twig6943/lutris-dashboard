@@ -39,13 +39,13 @@
 <script>
 import { systemTitle } from '@/config'
 import { defineComponent, ref, reactive } from 'vue'
-import { useStore } from 'vuex'
+import { useUserStore } from '@/stores/user'
 import { useRouter, useRoute } from 'vue-router'
 import { addRoutes } from '@/router'
 import { ElMessage } from 'element-plus'
 export default defineComponent({
   setup() {
-    const store = useStore()
+    const userStore = useUserStore()
     const router = useRouter()
     const route = useRoute()
     const form = reactive({
@@ -82,7 +82,7 @@ export default defineComponent({
           username: form.username,
           password: form.password
         }
-        store.dispatch('user/login', params)
+        userStore.login(params)
         .then(() => {
           ElMessage.success({
             message: 'login successful',

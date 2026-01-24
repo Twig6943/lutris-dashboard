@@ -6,12 +6,12 @@
 
 <script>
 import { defineComponent } from 'vue'
-import locale from 'element-plus/lib/locale/lang/en'
+import en from 'element-plus/es/locale/lang/en'
 export default defineComponent({
   name: 'App',
   setup() {
     return {
-      locale
+      locale: en
     }
   }
 })

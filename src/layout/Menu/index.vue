@@ -19,16 +19,16 @@
 <script>
 import { defineComponent, computed, onMounted } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 import MenuItem from './MenuItem.vue'
 export default defineComponent({
   components: {
     MenuItem
   },
   setup() {
-    const store = useStore()
-    const isCollapse = computed(() => store.state.app.isCollapse)
-    const expandOneMenu = computed(() => store.state.app.expandOneMenu)
+    const appStore = useAppStore()
+    const { isCollapse, expandOneMenu } = storeToRefs(appStore)
     const allRoutes = useRouter().options.routes
     const route = useRoute()
     const activeMenu = computed(() => {

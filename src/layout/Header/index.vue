@@ -26,32 +26,28 @@
 
 <script>
 import { defineComponent, computed, reactive } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
+import { useUserStore } from '@/stores/user'
 import Breadcrumb from './Breadcrumb.vue'
 export default defineComponent({
   components: {
     Breadcrumb,
   },
   setup() {
-    const store = useStore()
-    const router = useRouter()
-    const route = useRoute()
+    const appStore = useAppStore()
+    const userStore = useUserStore()
+    const { isCollapse } = storeToRefs(appStore)
     const layer = reactive({
       show: false,
       showButton: true
     })
-    const isCollapse = computed(() => store.state.app.isCollapse)
-    // isCollapse change to hide/show the sidebar
     const opendStateChange = () => {
-      store.commit('app/isCollapseChange', !isCollapse.value)
+      appStore.toggleCollapse()
     }
-
-    // login out the system
     const loginOut = () => {
-      store.dispatch('user/loginOut')
+      userStore.loginOut()
     }
-    
     return {
       isCollapse,
       layer,

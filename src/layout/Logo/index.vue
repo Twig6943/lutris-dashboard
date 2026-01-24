@@ -6,13 +6,13 @@
 </template>
 
 <script>
-import { defineComponent, computed } from 'vue'
-import { useStore } from 'vuex'
+import { defineComponent } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 import { systemTitle } from '@/config'
 export default defineComponent({
   setup() {
-    const store = useStore()
-    const isCollapse = computed(() => store.state.app.isCollapse)
+    const { isCollapse } = storeToRefs(useAppStore())
     return {
       isCollapse,
       systemTitle

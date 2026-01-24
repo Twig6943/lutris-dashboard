@@ -34,7 +34,9 @@
 <script>
 import { defineComponent, computed, unref, watch, reactive, ref, nextTick } from 'vue'
 import Item from './item.vue'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
+import { useKeepAliveStore } from '@/stores/keepAlive'
 import { useRoute, useRouter } from 'vue-router'
 import tabsHook from './tabsHook'
 export default defineComponent({
@@ -42,7 +44,8 @@ export default defineComponent({
     Item
   },
   setup() {
-    const store = useStore()
+    const appStore = useAppStore()
+    const keepAliveStore = useKeepAliveStore()
     const route = useRoute()
     const router = useRouter()
     const scrollbarDom = ref(null)
@@ -51,7 +54,7 @@ export default defineComponent({
       path: '/dashboard',
       meta: { title: 'front page', hideClose: true }
     }
-    const contentFullScreen = computed(() => store.state.app.contentFullScreen)
+    const { contentFullScreen } = storeToRefs(appStore)
     const currentDisabled = computed(() => route.path === defaultMenu.path)
 
     let activeMenu = reactive({ path: '' })
@@ -71,7 +74,7 @@ export default defineComponent({
     })
 
     function onFullscreen() {
-      store.commit('app/contentFullScreenChange', !contentFullScreen.value)
+      appStore.setContentFullScreen(!contentFullScreen.value)
     }
 
     function pageReload() {
@@ -132,7 +135,7 @@ export default defineComponent({
       let index = 0
       if (!menu.meta.hideClose) {
         if (menu.meta.cache && menu.name) {
-          store.commit('keepAlive/delKeepAliveComponentsName', menu.name)
+          keepAliveStore.removeComponentName(menu.name)
         }
         index = menuList.value.findIndex((item) => item.path === menu.path)
         menuList.value.splice(index, 1)
@@ -178,7 +181,7 @@ export default defineComponent({
       menuList.value.forEach((menu) => {
         menu.meta && menu.meta.cache && menu.name && keepAliveNames.push(menu.name)
       })
-      store.commit('keepAlive/setKeepAliveComponentsName', keepAliveNames)
+      keepAliveStore.setComponentNames(keepAliveNames)
     }
 
     // 初始化时调用：1. 新增菜单 2. 初始化activeMenu

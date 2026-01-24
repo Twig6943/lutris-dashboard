@@ -39,8 +39,9 @@
 
 <script>
 import { defineComponent, computed, onBeforeMount } from "vue";
-import { useStore } from "vuex";
-import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useAppStore } from "@/stores/app";
+import { useKeepAliveStore } from "@/stores/keepAlive";
 import { useEventListener } from "@vueuse/core";
 import Menu from "./Menu/index.vue";
 import Logo from "./Logo/index.vue";
@@ -52,31 +53,24 @@ export default defineComponent({
     Header,
   },
   setup() {
-    const store = useStore();
-    // computed
-    const isCollapse = computed(() => store.state.app.isCollapse);
-    const contentFullScreen = computed(() => store.state.app.contentFullScreen);
-    const showLogo = computed(() => store.state.app.showLogo);
-    const keepAliveComponentsName = computed(() => store.getters['keepAlive/keepAliveComponentsName']);
+    const appStore = useAppStore();
+    const keepAliveStore = useKeepAliveStore();
+    const { isCollapse, contentFullScreen, showLogo } = storeToRefs(appStore);
+    const keepAliveComponentsName = computed(() => keepAliveStore.componentNames);
 
     const resizeHandler = () => {
       if (document.body.clientWidth <= 1000 && !isCollapse.value) {
-        store.commit("app/isCollapseChange", true);
+        appStore.setCollapse(true);
       } else if (document.body.clientWidth > 1000 && isCollapse.value) {
-        store.commit("app/isCollapseChange", false);
+        appStore.setCollapse(false);
       }
     };
-    // 初始化调用
     resizeHandler();
-    // beforeMount
     onBeforeMount(() => {
-      // 监听页面变化
       useEventListener("resize", resizeHandler);
     });
-    // methods
-    // 隐藏菜单
     const hideMenu = () => {
-      store.commit("app/isCollapseChange", true);
+      appStore.setCollapse(true);
     };
     return {
       isCollapse,

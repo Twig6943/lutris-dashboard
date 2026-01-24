@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import store from '@/store'
+import pinia from '@/stores'
+import { useUserStore } from '@/stores/user'
+import { useKeepAliveStore } from '@/stores/keepAlive'
 import NProgress from '@/utils/system/nprogress'
 import { changeTitle } from '@/utils/system/title'
 
@@ -53,7 +55,10 @@ function eachData(data, type) {
   console.log(data)
 }
 
-if (store.state.user.token) {
+const userStore = useUserStore(pinia)
+const keepAliveStore = useKeepAliveStore(pinia)
+
+if (userStore.token) {
   addRoutes()
 }
 
@@ -61,7 +66,7 @@ const whiteList = ['/login']
 
 router.beforeEach((to, _from, next) => {
   NProgress.start();
-  if (store.state.user.token || whiteList.indexOf(to.path) !== -1) {
+  if (userStore.token || whiteList.indexOf(to.path) !== -1) {
     to.meta.title ? (changeTitle(to.meta.title)) : "";
     next()
   } else {
@@ -71,10 +76,9 @@ router.beforeEach((to, _from, next) => {
 });
 
 router.afterEach((to, _from) => {
-  const keepAliveComponentsName = store.getters['keepAlive/keepAliveComponentsName'] || []
   const name = to.matched[to.matched.length - 1].components.default.name
-  if (to.meta && to.meta.cache && name && !keepAliveComponentsName.includes(name)) {
-    store.commit('keepAlive/addKeepAliveComponentsName', name)
+  if (to.meta && to.meta.cache && name && !keepAliveStore.componentNames.includes(name)) {
+    keepAliveStore.addComponentName(name)
   }
   NProgress.done();
 });

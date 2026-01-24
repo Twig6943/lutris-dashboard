@@ -6,7 +6,8 @@
 </template>
 <script>
 import { defineComponent, computed } from 'vue'
-import { useStore } from "vuex";
+import { storeToRefs } from 'pinia'
+import { useAppStore } from '@/stores/app'
 export default defineComponent({
   name: 'appLink',
   props: {
@@ -16,16 +17,16 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const store = useStore();
-    const isCollapse = computed(() => store.state.app.isCollapse);
+    const appStore = useAppStore();
+    const { isCollapse } = storeToRefs(appStore);
     const linkProps = (to) => {
      return {
        to: to
-     } 
+     }
     }
     const hideMenu = () => {
       if (document.body.clientWidth <= 1000 && !isCollapse.value) {
-        store.commit("app/isCollapseChange", true);
+        appStore.setCollapse(true);
       }
     };
     return {
