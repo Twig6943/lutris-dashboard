@@ -64,6 +64,37 @@ export function mergeGames(slug1, slug2) {
   })
 }
 
+export function fetchMergeSuggestions() {
+  return request({
+    url: '/api/games/merge-suggestions',
+    method: 'get'
+  })
+}
+
+export function acceptMergeSuggestion(suggestionId) {
+  return request({
+    url: `/api/games/merge-suggestions/${suggestionId}`,
+    method: 'post',
+    data: { accepted: true }
+  })
+}
+
+export function rejectMergeSuggestion(suggestionId) {
+  return request({
+    url: `/api/games/merge-suggestions/${suggestionId}`,
+    method: 'post',
+    data: { accepted: false }
+  })
+}
+
+export function swapMergeSuggestion(suggestionId) {
+  return request({
+    url: `/api/games/merge-suggestions/${suggestionId}`,
+    method: 'post',
+    data: { swap: true }
+  })
+}
+
 export function fetchGameScreenshots() {
   return request({
     url: `/api/games/screenshots`,
