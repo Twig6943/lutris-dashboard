@@ -28,7 +28,7 @@
             @confirm="doMerge">
             <template #reference>
               <el-button type="warning" size="large">
-                <el-icon><Right /></el-icon> Merge
+                <el-icon><Back /></el-icon> Merge
               </el-button>
             </template>
           </el-popconfirm>
