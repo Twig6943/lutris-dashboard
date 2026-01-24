@@ -1,5 +1,10 @@
 <template>
   <div class="dashboard" v-loading="statsLoading">
+    <!-- Game Search -->
+    <div class="search-bar">
+      <game-search-input :on-select="onGameSelect" />
+    </div>
+
     <!-- Action Items Banner -->
     <div class="action-banner" v-if="totalActionItems > 0">
       <el-icon><WarningFilled /></el-icon>
@@ -140,25 +145,19 @@
     <!-- Quick Links -->
     <div class="section-title">Quick Actions</div>
     <el-row :gutter="16" class="quick-links">
-      <el-col :xs="12" :sm="6">
-        <router-link to="/games/index" class="quick-link">
-          <el-icon><Search /></el-icon>
-          <span>Search Games</span>
-        </router-link>
-      </el-col>
-      <el-col :xs="12" :sm="6">
+      <el-col :xs="12" :sm="8">
         <router-link to="/games/merge" class="quick-link">
           <el-icon><Connection /></el-icon>
           <span>Merge Games</span>
         </router-link>
       </el-col>
-      <el-col :xs="12" :sm="6">
+      <el-col :xs="12" :sm="8">
         <router-link to="/installers/submissions" class="quick-link">
           <el-icon><Upload /></el-icon>
           <span>Installer Reviews</span>
         </router-link>
       </el-col>
-      <el-col :xs="12" :sm="6">
+      <el-col :xs="12" :sm="8">
         <router-link to="/installers/drafts" class="quick-link">
           <el-icon><Document /></el-icon>
           <span>Installer Drafts</span>
@@ -170,9 +169,13 @@
 
 <script>
 import { fetchStats } from '@/api/games'
+import GameSearchInput from '@/components/GameSearchInput/index.vue'
 
 export default {
   name: 'Dashboard',
+  components: {
+    GameSearchInput
+  },
   data() {
     return {
       statsLoading: false,
@@ -208,6 +211,9 @@ export default {
     this.getStats()
   },
   methods: {
+    onGameSelect(slug) {
+      this.$router.push({ path: '/games/' + slug })
+    },
     getStats() {
       this.statsLoading = true
       fetchStats().then(response => {
@@ -223,6 +229,14 @@ export default {
 .dashboard {
   padding: 20px;
   max-width: 1200px;
+}
+
+.search-bar {
+  margin-bottom: 24px;
+
+  :deep(.el-autocomplete) {
+    width: 100% !important;
+  }
 }
 
 .section-title {

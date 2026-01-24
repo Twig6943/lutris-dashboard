@@ -4,16 +4,10 @@ const route = [
   {
     path: '/games',
     component: Layout,
-    redirect: '/games/index',
+    redirect: '/games/game_submissions',
     meta: { title: 'Games', icon: 'Copy' },
     alwayShow: true,
     children: [
-      {
-        path: 'index',
-        component: createNameComponent(() => import('@/views/games/index.vue')),
-        name: 'GamesDashboard',
-        meta: { title: 'Search game', noCache: true }
-      },
       {
         path: 'game_submissions',
         component: createNameComponent(() => import('@/views/games/submissions.vue')),
