@@ -10,7 +10,7 @@
       <div class="user-info">
         <el-dropdown>
           <span class="el-dropdown-link">
-            administrator
+            {{ username }}
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <template #dropdown>
@@ -38,6 +38,7 @@ export default defineComponent({
     const appStore = useAppStore()
     const userStore = useUserStore()
     const { isCollapse } = storeToRefs(appStore)
+    const username = computed(() => userStore.info?.username || 'user')
     const layer = reactive({
       show: false,
       showButton: true
@@ -51,6 +52,7 @@ export default defineComponent({
     return {
       isCollapse,
       layer,
+      username,
       opendStateChange,
       loginOut
     }
@@ -90,6 +92,7 @@ header {
   }
 }
 .right-box {
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -106,8 +109,13 @@ header {
     }
   }
   .user-info {
+    height: 100%;
+    display: flex;
+    align-items: center;
     margin-left: 20px;
     .el-dropdown-link {
+      display: flex;
+      align-items: center;
       color: var(--system-header-breadcrumb-text-color);
     }
   }

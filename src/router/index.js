@@ -52,6 +52,7 @@ const keepAliveStore = useKeepAliveStore(pinia)
 
 if (userStore.token) {
   addRoutes()
+  userStore.getInfo()
 }
 
 const whiteList = ['/login']

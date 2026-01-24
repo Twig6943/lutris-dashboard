@@ -10,13 +10,13 @@ export const useUserStore = defineStore('user', {
     async login(params) {
       const res = await loginApi(params)
       this.token = res.data.token
-      await this.getInfo({ token: res.data.token })
+      await this.getInfo()
       return res.data.token
     },
-    async getInfo(params) {
-      const res = await getInfoApi(params)
-      this.info = res.data.info
-      return res.data.info
+    async getInfo() {
+      const res = await getInfoApi()
+      this.info = res.data
+      return res.data
     },
     loginOut() {
       loginOutApi()

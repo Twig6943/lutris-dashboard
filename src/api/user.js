@@ -8,11 +8,10 @@ export function loginApi(data) {
   })
 }
 
-export function getInfoApi(data) {
+export function getInfoApi() {
   return request({
     url: '/api/users/me',
-    method: 'get',
-    data
+    method: 'get'
   })
 }
 
