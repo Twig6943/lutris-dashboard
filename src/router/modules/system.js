@@ -30,13 +30,15 @@ const route = [
     component: createNameComponent(() => import('@/views/system/login.vue')),
     hideMenu: true,
     meta: { title: 'Login', hideTabs: true }
-  },
-  {
-    path: "/:pathMatch(.*)",
-    component: Layout,
-    redirect: "/404",
-    hideMenu: true
-  },
+  }
 ]
+
+// Catch-all route - must be added AFTER dynamic routes to avoid matching first
+export const catchAllRoute = {
+  path: '/:pathMatch(.*)',
+  component: Layout,
+  redirect: '/404',
+  hideMenu: true
+}
 
 export default route

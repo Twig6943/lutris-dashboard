@@ -1,5 +1,4 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import pinia from '@/stores'
 import { useUserStore } from '@/stores/user'
 import { useKeepAliveStore } from '@/stores/keepAlive'
 import NProgress from '@/utils/system/nprogress'
@@ -12,7 +11,7 @@ import { createNameComponent } from './createNode'
 import Dashboard from './modules/dashboard'
 import Games from './modules/games'
 import Installers from './modules/installers'
-import System from './modules/system'
+import System, { catchAllRoute } from './modules/system'
 
 let modules = [...System]
 
@@ -32,6 +31,8 @@ export function addRoutes() {
     modules.push(item)
     router.addRoute(item)
   })
+  // Add catch-all route last so it doesn't match before dynamic routes
+  router.addRoute(catchAllRoute)
   routesInitialized = true
 }
 
@@ -51,13 +52,11 @@ function eachData(data, type) {
   console.log(data)
 }
 
-const userStore = useUserStore(pinia)
-const keepAliveStore = useKeepAliveStore(pinia)
-
 const whiteList = ['/login']
 
 router.beforeEach((to, _from, next) => {
   NProgress.start()
+  const userStore = useUserStore()
 
   // Initialize routes on first navigation if user has a persisted token
   // This must happen in beforeEach (not at module load) because the
@@ -80,6 +79,7 @@ router.beforeEach((to, _from, next) => {
 })
 
 router.afterEach((to, _from) => {
+  const keepAliveStore = useKeepAliveStore()
   const name = to.matched[to.matched.length - 1].components.default.name
   if (to.meta && to.meta.cache && name && !keepAliveStore.componentNames.includes(name)) {
     keepAliveStore.addComponentName(name)
