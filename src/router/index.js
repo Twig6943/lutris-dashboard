@@ -24,11 +24,15 @@ const router = createRouter({
 })
 let asyncRoutes = [...Dashboard, ...Games, ...Installers]
 
+let routesInitialized = false
+
 export function addRoutes() {
+  if (routesInitialized) return
   asyncRoutes.forEach((item) => {
     modules.push(item)
     router.addRoute(item)
   })
+  routesInitialized = true
 }
 
 function eachData(data, type) {
@@ -50,15 +54,22 @@ function eachData(data, type) {
 const userStore = useUserStore(pinia)
 const keepAliveStore = useKeepAliveStore(pinia)
 
-if (userStore.token) {
-  addRoutes()
-  userStore.getInfo()
-}
-
 const whiteList = ['/login']
 
 router.beforeEach((to, _from, next) => {
   NProgress.start()
+
+  // Initialize routes on first navigation if user has a persisted token
+  // This must happen in beforeEach (not at module load) because the
+  // pinia persistence plugin hydrates state after app.use(pinia)
+  if (!routesInitialized && userStore.token) {
+    addRoutes()
+    userStore.getInfo()
+    // Redirect to the same path so the newly added routes are recognized
+    next({ path: to.path, query: to.query, replace: true })
+    return
+  }
+
   if (userStore.token || whiteList.indexOf(to.path) !== -1) {
     to.meta.title ? changeTitle(to.meta.title) : ''
     next()
