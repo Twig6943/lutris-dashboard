@@ -4,8 +4,6 @@
 ```
 git clone https://github.com/lutris/lutris-dashboard
 npm install
-npm run dev 或 npm run start
+npm run dev
 npm run build
 ```
-   
-
